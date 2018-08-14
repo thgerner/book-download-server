@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+  <Appenders>
+    <Console name="CONSOLE" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d %-5p [%t] %c{1.} - %m%n"/>
+    </Console>
+    <File name="TEMP" fileName="log/server.log">
+      <PatternLayout pattern="%d %-5p [%t] %c - %m%n"/>
+    </File>
+    <Async name="ASYNC">
+      <AppenderRef ref="TEMP"/>
+      <AppenderRef ref="CONSOLE"/>
+    </Async>
+  </Appenders>
+  <Loggers>
+  	<Logger name="net.sf.webdav.WebDavServletBean" level="debug">
+  		<AppenderRef ref="ASYNC"/>
+  	</Logger>
+    <Root level="info">
+      <AppenderRef ref="ASYNC"/>
+    </Root>
+  </Loggers>
+</Configuration>
