@@ -181,6 +181,7 @@ public class BookServlet extends HttpServlet
                     LOG.warn("Closing InputStream causes Exception!\n", e);
                 }
                 try {
+                	out.flush();
                     resp.flushBuffer();
                 } catch (Exception e) {
                     LOG.warn("Flushing OutputStream causes Exception!\n", e);
@@ -237,33 +238,33 @@ public class BookServlet extends HttpServlet
                 childrenTemp.append(getHeader(path, resp, req));
                 childrenTemp.append("<p>");
                 if (!path.equals("/")) {
-                    childrenTemp.append("<a class=\"navleft\" href=\"../\"><img src=\"/go-up.png\" alt=\"Parent\" width=\"32\" height=\"32\"/></a>\n");
+                    childrenTemp.append("<a class=\"navleft\" href=\"../\"><img src=\"/static/go-up.png\" alt=\"Parent\" width=\"32\" height=\"32\"/></a>\n");
                 }
                 ArrayList<File> childrenList = getSortedObjectList(path, f.listFiles());
                 int start = page * 12;
                 childrenTemp.append("<div class=\"navright\">");
                 if (childrenList.size() > 12) {
                     if (page == 0) {
-                        childrenTemp.append("<img style=\"margin-right:50px\" src=\"/disabled.png\" alt=\"Left\" width=\"32\" height=\"32\"/>\n");
+                        childrenTemp.append("<img style=\"margin-right:50px\" src=\"/static/disabled.png\" alt=\"Left\" width=\"32\" height=\"32\"/>\n");
                     } else {
                         childrenTemp.append("<a style=\"margin-right:50px\" href=\"");
                         childrenTemp.append(href);
                         childrenTemp.append("?page=");
                         childrenTemp.append(page);
-                        childrenTemp.append("\"><img src=\"/go-previous.png\" alt=\"Left\" width=\"32\" height=\"32\"/></a>\n");
+                        childrenTemp.append("\"><img src=\"/static/go-previous.png\" alt=\"Left\" width=\"32\" height=\"32\"/></a>\n");
                     }
                     if (start + 12 < childrenList.size()) {
                         childrenTemp.append("<a href=\"");
                         childrenTemp.append(href);
                         childrenTemp.append("?page=");
                         childrenTemp.append(page + 2);
-                        childrenTemp.append("\"><img src=\"/go-next.png\" alt=\"Right\" width=\"32\" height=\"32\"/></a>\n");
+                        childrenTemp.append("\"><img src=\"/static/go-next.png\" alt=\"Right\" width=\"32\" height=\"32\"/></a>\n");
                     } else {
-                        childrenTemp.append("<img src=\"/disabled.png\" alt=\"Right\" width=\"32\" height=\"32\"/>\n");
+                        childrenTemp.append("<img src=\"/static/disabled.png\" alt=\"Right\" width=\"32\" height=\"32\"/>\n");
                     }
                 } else {
-                    childrenTemp.append("<img style=\"margin-right:50px\" src=\"/disabled.png\" alt=\"Left\" width=\"32\" height=\"32\"/>\n");
-                    childrenTemp.append("<img src=\"/disabled.png\" alt=\"Right\" width=\"32\" height=\"32\"/>\n");
+                    childrenTemp.append("<img style=\"margin-right:50px\" src=\"/static/disabled.png\" alt=\"Left\" width=\"32\" height=\"32\"/>\n");
+                    childrenTemp.append("<img src=\"/static/disabled.png\" alt=\"Right\" width=\"32\" height=\"32\"/>\n");
                 }
                 childrenTemp.append("</div></p>\n");
 
@@ -348,7 +349,7 @@ public class BookServlet extends HttpServlet
         if (obj.isDirectory())
         {
             childrenTemp.append("/\">");
-            childrenTemp.append("<img src=\"/bookshelf.png\" alt=\"Folder\" width=\"100\" height=\"160\"/><p>");
+            childrenTemp.append("<img src=\"/static/bookshelf.png\" alt=\"Folder\" width=\"100\" height=\"160\"/><p>");
             childrenTemp.append(child);
         }
         else
@@ -366,9 +367,11 @@ public class BookServlet extends HttpServlet
                 if (ext != -1) {
                     childrenTemp.append(child.substring(0, ext));
                 }
-                childrenTemp.append(".png\" alt=\"No preview\" width=\"100\" height=\"160\"/><p>");
+                childrenTemp.append(".png\" alt=\"");
+                childrenTemp.append(child.substring(0, ext));
+                childrenTemp.append("\" width=\"100\" height=\"160\"/><p>");
             } else {
-                childrenTemp.append("<img src=\"/image/NoPreview.png\" alt=\"No preview\" width=\"100\" height=\"160\"/><p>");
+                childrenTemp.append("<img src=\"/static/NoPreview.png\" alt=\"No preview\" width=\"100\" height=\"160\"/><p>");
             }
             childrenTemp.append(createBookName(child));
         }
@@ -400,7 +403,7 @@ public class BookServlet extends HttpServlet
     private String getCSS()
     {
         // link to styles to use
-        String retVal = "<link rel=\"stylesheet\" type=\"text/css\" href=\"/books.css\">\n";
+        String retVal = "<link rel=\"stylesheet\" type=\"text/css\" href=\"/static/books.css\">\n";
 
         return retVal;
     }

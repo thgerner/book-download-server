@@ -29,9 +29,10 @@
  */
 package de.gerner.books.web.server;
 
-import java.io.File;
+import java.net.URL;
 
 import org.eclipse.jetty.servlet.DefaultServlet;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.server.MimeMappings;
@@ -44,40 +45,36 @@ import org.springframework.context.annotation.Bean;
  * @author thomas
  *
  */
-/**
- * @author thomas
- *
- */
 @SpringBootApplication
 public class BooksServerApplication {
 
-    private File bookRoot = new File("/home/thomas/Download/eBooks");
-    private File resourceRoot = new File("resources");
-    private File imageRoot = new File(resourceRoot, "img");
-
 	@Bean
-	public ServletRegistrationBean<BookServlet> bookServletRegistrationBean() {
+	public ServletRegistrationBean<BookServlet> bookServletRegistrationBean(
+			@Value("${bookserver.ebooks.root}") String bookRoot) {
 		ServletRegistrationBean<BookServlet> bean = new ServletRegistrationBean<BookServlet>(new BookServlet(), "/books/*");
-		bean.addInitParameter(BookServlet.ROOTPATH_PARAMETER, bookRoot.getAbsolutePath());
+		bean.addInitParameter(BookServlet.ROOTPATH_PARAMETER, bookRoot);
 		bean.setEnabled(true);
 		
 		return bean;
 	}
 
 	@Bean
-	public ServletRegistrationBean<BookCoverPreviewServlet> imageServletRegistrationBean() {
+	public ServletRegistrationBean<BookCoverPreviewServlet> imageServletRegistrationBean(
+			@Value("${bookserver.ebooks.root}") String bookRoot,
+			@Value("${bookserver.preview.cache}") String imageRoot) {
 		ServletRegistrationBean<BookCoverPreviewServlet> bean = new ServletRegistrationBean<BookCoverPreviewServlet>(new BookCoverPreviewServlet(), "/image/*");
-		bean.addInitParameter(BookCoverPreviewServlet.ROOTPATH_PARAMETER, imageRoot.getAbsolutePath());
-		bean.addInitParameter(BookCoverPreviewServlet.BOOKSROOT_PARAMETER, bookRoot.getAbsolutePath());
+		bean.addInitParameter(BookCoverPreviewServlet.ROOTPATH_PARAMETER, imageRoot);
+		bean.addInitParameter(BookCoverPreviewServlet.BOOKSROOT_PARAMETER, bookRoot);
 		bean.setEnabled(true);
 		
 		return bean;
 	}
 	
 	@Bean
-	public ServletRegistrationBean<DefaultServlet> defaultServletRegistrationBean() {
-		ServletRegistrationBean<DefaultServlet> bean = new ServletRegistrationBean<DefaultServlet>(new DefaultServlet(), "/*");
-		bean.addInitParameter("resourceBase", resourceRoot.getAbsolutePath());
+	public ServletRegistrationBean<DefaultServlet> defaultServletRegistrationBean()  {
+		ServletRegistrationBean<DefaultServlet> bean = new ServletRegistrationBean<DefaultServlet>(new DefaultServlet(), "/static/*");
+		URL resourceBase = BooksServerApplication.class.getResource("/");
+		bean.addInitParameter("resourceBase", resourceBase.toString());
 		
 		return bean;
 	}
