@@ -32,8 +32,6 @@ package de.gerner.books.web.server;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 
