@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <title>Content of folder/</title>
+	  <link rel="stylesheet" type="text/css" href="/books.css">
+	</head>
+	<body>
+	  <h2>B&uuml;cherssammlung</h2>
+	  <div>
+	    <a class="navleft" th:if="${isSubShelf}" th:href="${parentShelf}"><img src="/go-up.png" alt="Parent" width="32" height="32"/></a>
+	    <div class="navright">
+	      <a style="margin-right:50px" th:if="${hasPrevPage}" th:href="${prevPage}"><img src="/go-previous.png" alt="Left" width="32" height="32"/></a>
+	      <img style="margin-right:50px" th:if="!${hasPrevPage}" src="/disabled.png" alt="Left" width="32" height="32"/>
+	      <a th:if="${hasNextPage}" th:href="${nextPage}"><img src="/go-next.png" alt="Right" width="32" height="32"/></a>
+	      <img src="/disabled.png" th:href="!${hasNextPage}" alt="Right" width="32" height="32"/>
+	    </div>
+	  </div>
+		<div style="clear:both">
+		  <ul th:each="row : ${rows}">
+		    <li th:each="col : ${row.cols}">
+		      <p class="listentry"><a th:href="${col.bookHref}"><img th:src="${col.bookImage}" th:alt="${col.altText}" width="100px" height="160px"/><br/>
+		      <span th:text="${col.bookText}"></span></a></p>
+		    </li>
+		  </ul>
+		</div>
+	</body>
+</html>
