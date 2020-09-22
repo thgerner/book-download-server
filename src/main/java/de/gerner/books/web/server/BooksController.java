@@ -65,7 +65,12 @@ public class BooksController
   @GetMapping(path="/**")
   public String controlPage(HttpServletRequest req, @RequestParam(required=false) String page, Model model) {
     
-    String bookPath = req.getServletPath().substring(7);
+    String bookPath = req.getServletPath();
+    if (bookPath.length() > 7) {
+      bookPath = bookPath.substring(7);
+    } else {
+      bookPath = "";
+    }
     fillModel(bookPath, page, model);
     return "books";
   }
