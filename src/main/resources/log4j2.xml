@@ -4,18 +4,20 @@
     <Console name="CONSOLE" target="SYSTEM_OUT">
       <PatternLayout pattern="%d %-5p [%t] %c{1.} - %m%n"/>
     </Console>
-    <File name="TEMP" fileName="log/server.log">
+    <RollingFile name="TEMP" fileName="log/server.log" filePattern="log/server-%d{MM-dd-yyyy}-%i.log.gz">
       <PatternLayout pattern="%d %-5p [%t] %c - %m%n"/>
-    </File>
+      <Policies>
+        <TimeBasedTriggeringPolicy />
+        <SizeBasedTriggeringPolicy size="1 MB"/>
+      </Policies>
+      <DefaultRolloverStrategy max="10"/>
+    </RollingFile>
     <Async name="ASYNC">
       <AppenderRef ref="TEMP"/>
       <AppenderRef ref="CONSOLE"/>
     </Async>
   </Appenders>
   <Loggers>
-  	<Logger name="net.sf.webdav.WebDavServletBean" level="debug">
-  		<AppenderRef ref="ASYNC"/>
-  	</Logger>
     <Root level="info">
       <AppenderRef ref="ASYNC"/>
     </Root>
