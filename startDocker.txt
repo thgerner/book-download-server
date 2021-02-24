@@ -1,1 +1,0 @@
-docker run --restart unless-stopped -d -p 8080:8080 -v /var/run/ebooks/:/var/books/preview/ -v /home/thomas/Download/eBooks/:/opt/bookserver/ebooks/ book-download-server:0.1
