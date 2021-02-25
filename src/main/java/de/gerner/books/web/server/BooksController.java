@@ -51,7 +51,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  */
 @Controller
-@RequestMapping(value="/books")
+@RequestMapping(value="/books/shelf")
 public class BooksController
 {
   private static final Logger LOG = LoggerFactory.getLogger(BooksController.class);
@@ -66,8 +66,8 @@ public class BooksController
   public String controlPage(HttpServletRequest req, @RequestParam(required=false) String page, Model model) {
     
     String bookPath = req.getServletPath();
-    if (bookPath.length() > 7) {
-      bookPath = bookPath.substring(7);
+    if (bookPath.length() > 13) {
+      bookPath = bookPath.substring(13);
     } else {
       bookPath = "";
     }
@@ -84,7 +84,7 @@ public class BooksController
     if (isSubShelf) {
       File sub = new File(bookPath);
       String parent = sub.getParent();
-      model.addAttribute("parentShelf", "/books/" + (parent == null ? "" : parent));
+      model.addAttribute("parentShelf", "/books/shelf/" + (parent == null ? "" : parent));
     }
     
     int rqPage = 0;
@@ -178,21 +178,21 @@ public class BooksController
     
     public String getBookHref() {
       if (f.isDirectory()) {
-        return "/books/" + base + f.getName();
+        return "/books/shelf/" + base + f.getName();
       } else {
-        return "/download/" + base + f.getName();
+        return "/books/download/" + base + f.getName();
       }
     }
     
     public String getBookImage() {
       if (f.isDirectory()) {
-        return "/bookshelf.png";
+        return "/books/bookshelf.png";
       }
       String name = f.getName();
       if (name.endsWith(".epub")) {
-        return "/image/" + base + name.substring(0, name.length() - 4) + "png";
+        return "/books/image/" + base + name.substring(0, name.length() - 4) + "png";
       }
-      return "/NoPreview.png";
+      return "/books/NoPreview.png";
     }
     
     public String getAltText() {

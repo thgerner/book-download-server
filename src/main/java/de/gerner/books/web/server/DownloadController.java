@@ -51,7 +51,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  */
 @Controller
-@RequestMapping(value="/download")
+@RequestMapping(value="/books/download")
 public class DownloadController
 {
   private static final Logger LOG = LoggerFactory.getLogger(DownloadController.class);
@@ -63,7 +63,7 @@ public class DownloadController
   @ResponseBody
   public ResponseEntity<InputStreamResource> downloadBook(HttpServletRequest req) {
     
-    String bookName = req.getServletPath().substring(10);
+    String bookName = req.getServletPath().substring(15);
     File root = new File(booksRoot);
     File f = new File(root, bookName);
     

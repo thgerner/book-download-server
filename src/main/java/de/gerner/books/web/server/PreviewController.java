@@ -61,7 +61,7 @@ import nl.siegmann.epublib.epub.EpubReader;
  *
  */
 @Controller
-@RequestMapping(value="/image")
+@RequestMapping(value="/books/image")
 public class PreviewController
 {
   private static final Logger LOG = LoggerFactory.getLogger(PreviewController.class);
@@ -78,7 +78,7 @@ public class PreviewController
   @ResponseBody
   public ResponseEntity<InputStreamResource> downloadPreviewImage(HttpServletRequest req) {
 
-    String imgName = req.getServletPath().substring(7);
+    String imgName = req.getServletPath().substring(12);
     File root = new File(imgRoot);
     File f = new File(root, imgName);
 
@@ -102,7 +102,7 @@ public class PreviewController
           return getResponseEntity(f);
         } else {
           // return NoPreview image
-          InputStream noPreview = getClass().getResourceAsStream("/static/NoPreview.png");
+          InputStream noPreview = getClass().getResourceAsStream("/books/static/NoPreview.png");
           if (noPreview != null)
             return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(new InputStreamResource(noPreview));
           else
