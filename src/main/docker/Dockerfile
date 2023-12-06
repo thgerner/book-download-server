@@ -1,11 +1,11 @@
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
-RUN apt-get update && apt-get install -y openjdk-8-jre && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y openjdk-17-jre && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /var/books/preview/ /opt/bookserver/ebooks/
 VOLUME ["/var/books/preview/", "/opt/bookserver/ebooks/"]
 
-COPY maven/BookDownloadServer-0.4.jar /opt/bookserver/BookDownloadServer.jar
+COPY maven/BookDownloadServer-0.5.jar /opt/bookserver/BookDownloadServer.jar
 
 EXPOSE 8080
 

@@ -34,7 +34,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;

@@ -35,7 +35,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +56,7 @@ public class BooksController
 {
   private static final Logger LOG = LoggerFactory.getLogger(BooksController.class);
   
-  private static final int NUM_ROWS = 3;
+  private static final int NUM_ROWS = 2;
   private static final int NUM_COLS = 4;
   
   @Value("${bookserver.ebooks.root}")
